@@ -1,14 +1,11 @@
 import time
 import datetime
-import pytz
 import numpy
 import random
 import gzip
-import zipfile
 import sys
 import argparse
 from faker import Faker
-from random import randrange
 from tzlocal import get_localzone
 local = get_localzone()
 
@@ -17,17 +14,17 @@ local = get_localzone()
 # log rotation
 
 
-class switch(object):
-    def __init__(self, value):
+class switch:
+    def __init__(self, value) -> None:
         self.value = value
         self.fall = False
 
-    def __iter__(self):
+    def __iter__(self) -> None:
         """Return the match method once, then stop"""
         yield self.match
         raise StopIteration
 
-    def match(self, *args):
+    def match(self, *args) -> bool:
         """Indicate whether or not to enter a case suite"""
         if self.fall or not args:
             return True
@@ -44,7 +41,7 @@ parser.add_argument("--num", "-n", dest='num_lines', help="Number of lines to ge
 parser.add_argument("--prefix", "-p", dest='file_prefix', help="Prefix the output file name", type=str)
 parser.add_argument("--sleep", "-s", help="Sleep this long between lines (in seconds)", default=0.0, type=float)
 
-args = parser.parse_args()
+args: parser = parser.parse_args()
 
 log_lines = args.num_lines
 file_prefix = args.file_prefix

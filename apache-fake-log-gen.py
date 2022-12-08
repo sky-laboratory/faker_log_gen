@@ -6,8 +6,9 @@ import gzip
 import sys
 import argparse
 from faker import Faker
-from tzlocal import get_localzone
-local = get_localzone()
+from zoneinfo import ZoneInfo
+
+local = ZoneInfo("Asia/Seoul")
 
 #todo:
 # allow writing different patterns (Common Log, Apache Error log etc)

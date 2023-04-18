@@ -8,7 +8,7 @@ import argparse
 from faker import Faker
 from zoneinfo import ZoneInfo
 
-local = ZoneInfo("Asia/Seoul")
+
 
 #todo:
 # allow writing different patterns (Common Log, Apache Error log etc)
@@ -67,16 +67,19 @@ for case in switch(output_type):
     if case():
         f = sys.stdout
 
-response=["200","404","500","301"]
+response = ["200", "404", "500", "301"]
 
-verb=["GET","POST","DELETE","PUT"]
+verb = ["GET","POST","DELETE","PUT"]
 
-resources=["/list","/wp-content","/wp-admin","/explore","/search/tag/list","/app/main/posts","/posts/posts/explore","/apps/cart.jsp?appID="]
+resources = ["/list", "/wp-content", "/wp-admin", "/explore", "/search/tag/list",
+             "/app/main/posts", "/posts/posts/explore", "/apps/cart.jsp?appID="]
 
-ualist = [faker.firefox, faker.chrome, faker.safari, faker.internet_explorer, faker.opera]
+ualist = [faker.firefox, faker.chrome, faker.safari, 
+          faker.internet_explorer, faker.opera]
+
 
 flag = True
-while (flag):
+while flag:
     if args.sleep:
         increment = datetime.timedelta(seconds=args.sleep)
     else:
@@ -85,17 +88,17 @@ while (flag):
 
     ip = faker.ipv4()
     dt = otime.strftime('%d/%b/%Y:%H:%M:%S')
-    tz = datetime.datetime.now(local).strftime('%z')
-    vrb = numpy.random.choice(verb,p=[0.6,0.1,0.1,0.2])
+    tz = datetime.datetime.now().strftime('%z')
+    vrb = numpy.random.choice(verb,p=[0.6, 0.1, 0.1, 0.2])
 
     uri = random.choice(resources)
     if uri.find("apps")>0:
         uri += str(random.randint(1000,10000))
 
-    resp = numpy.random.choice(response,p=[0.9,0.04,0.02,0.04])
+    resp = numpy.random.choice(response,p=[0.9, 0.04, 0.02, 0.04])
     byt = int(random.gauss(5000,50))
     referer = faker.uri()
-    useragent = numpy.random.choice(ualist,p=[0.5,0.3,0.1,0.05,0.05] )()
+    useragent = numpy.random.choice(ualist,p=[0.5, 0.3, 0.1, 0.05, 0.05] )()
     if log_format == "CLF":
         f.write('%s - - [%s %s] "%s %s HTTP/1.0" %s %s\n' % (ip,dt,tz,vrb,uri,resp,byt))
     elif log_format == "ELF": 

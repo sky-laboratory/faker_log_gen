@@ -104,6 +104,18 @@ response = ["200", "404", "500", "301"]
 
 verb = ["GET", "POST", "DELETE", "PUT"]
 
+redirection_response = [
+    "https://www.naver.com",
+    "https://www.tistory.com",
+    "https://www.youtube.com",
+    "https://www.facebook.com",
+    "https://www.instagram.com",
+    "https://www.daum.com",
+    "https://www.zoom.com",
+    "https://www.linkedin.com",
+    "https://www.google.com",
+]
+
 resources = [
     "/list",
     "/wp-content",
@@ -147,6 +159,7 @@ while flag:
     referer = faker.uri()
     useragent = numpy.random.choice(ualist, p=[0.5, 0.3, 0.1, 0.05, 0.05])()
     code = random.choice(cc)
+    start_redi = random.choice(redirection_response)
     # if log_format == "ELF":  # CLF
     #     f.write(
     #         '%s - - [%s %s] "%s" "%s HTTP/1.0" %s %s\n'
@@ -154,8 +167,8 @@ while flag:
     #     )
     if log_format == "ELF":
         f.write(
-            '%s - - [%s %s] "%s %s HTTP/1.0" %s %s "%s" "%s" "%s"\n'
-            % (ip, dt, tz, vrb, uri, resp, byt, referer, useragent, code)
+            '%s - - [%s %s] %s %s "%s %s HTTP/1.0" %s %s "%s" "%s"\n'
+            % (ip, dt, tz, start_redi, referer, vrb, uri, resp, byt, useragent, code)
         )
     f.flush()
 

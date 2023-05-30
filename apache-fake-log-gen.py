@@ -83,9 +83,9 @@ timestr = time.strftime("%Y%m%d-%H%M%S")
 otime = datetime.datetime.now()
 
 outFileName = (
-    "access_log_" + timestr + ".log"
+    "access_log_" + ".log"
     if not file_prefix
-    else file_prefix + "_access_log_" + timestr + ".log"
+    else file_prefix + "_access_log_" + "present" + ".log"
 )
 
 for case in switch(output_type):
@@ -167,7 +167,7 @@ while flag:
     #     )
     if log_format == "ELF":
         f.write(
-            '%s - - [%s %s] %s %s "%s %s HTTP/1.0" %s %s "%s" "%s"\n'
+            '%s - - [%s %s] %s %s "%s" "%s HTTP/1.0" %s %s %s "%s"\n'
             % (ip, dt, tz, start_redi, referer, vrb, uri, resp, byt, useragent, code)
         )
     f.flush()
